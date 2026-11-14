@@ -6,7 +6,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://reseratt.bnms.workers.dev").replace(
+const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://reseratt.se").replace(
   /\/+$/,
   ""
 );

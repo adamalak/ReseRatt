@@ -6,7 +6,7 @@ export const SITE_CONFIG = {
   tagline:
     "Oberoende svensk kalkylator och checklista för förseningsersättning på tåg, lokaltrafik och flyg (EU 261/2004).",
   year: RULES_YEAR,
-  url: (process.env.NEXT_PUBLIC_SITE_URL || "https://reseratt.bnms.workers.dev").replace(/\/+$/, ""),
+  url: (process.env.NEXT_PUBLIC_SITE_URL || "https://reseratt.se").replace(/\/+$/, ""),
   locale: "sv_SE",
   /**
    * Sätts till t.ex. Google Search Console HTML-tagg-token vid deploy (utan <meta>-omslag).
@@ -25,7 +25,7 @@ export const SITE_CONFIG = {
     { href: "/reklamationsmall", label: "Reklamationsmall", shortLabel: "Kravbrev" },
     { href: "/guider", label: "Guider & regler", shortLabel: "Guider" },
   ],
-  sisterSiteUrl: "https://kollapengarna.bnms.workers.dev",
+  sisterSiteUrl: "https://kollapengar.se",
   sisterSiteName: "KollaPengarna",
   githubRepoUrl: "https://github.com/adamalak",
   /**

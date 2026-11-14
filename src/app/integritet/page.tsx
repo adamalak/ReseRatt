@@ -33,9 +33,11 @@ export default function IntegritetPage() {
           <section>
             <h2 className="text-base font-bold text-zinc-900">2. Inga spårningscookies</h2>
             <p className="mt-2">
-              Webbplatsen använder inga cookies för annonsering eller spårning. Om webbplatsen i
-              framtiden aktiverar besöksanalys eller annonser (t.ex. Google AdSense) kommer en tydlig
-              samtyckesbanner enligt GDPR att visas innan några cookies sätts.
+              Webbplatsen använder inga cookies för annonsering eller spårning. För övergripande,
+              anonymiserad besöksstatistik (till exempel antal sidvisningar utan att spåra enskilda
+              personer) används cookie-fri mätning via Cloudflare Web Analytics. Om webbplatsen i
+              framtiden aktiverar annonser eller verktyg som sätter cookies (t.ex. Google AdSense)
+              kommer en tydlig samtyckesbanner enligt GDPR att visas först.
             </p>
           </section>
 

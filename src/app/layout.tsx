@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, IBM_Plex_Sans, Newsreader } from "next/font/google";
+import Script from "next/script";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
 import { SITE_CONFIG } from "@/lib/siteConfig";
@@ -65,6 +66,17 @@ export default function RootLayout({
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
+        {SITE_CONFIG.cloudflareAnalyticsToken ? (
+          <Script
+            id="cf-web-analytics"
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon={JSON.stringify({
+              token: SITE_CONFIG.cloudflareAnalyticsToken,
+              spa: true,
+            })}
+            strategy="afterInteractive"
+          />
+        ) : null}
       </body>
     </html>
   );

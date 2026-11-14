@@ -16,6 +16,11 @@ export const SITE_CONFIG = {
    */
   googleVerificationToken: process.env.NEXT_PUBLIC_GSC_VERIFICATION || "",
   /**
+   * Cookie-fri Cloudflare Web Analytics-token.
+   */
+  cloudflareAnalyticsToken:
+    process.env.NEXT_PUBLIC_CF_ANALYTICS_TOKEN || "3b0a80de03e74961b9e40e79bca677bc",
+  /**
    * Valfritt: aktivera verklig affiliate-URL för flygombud senare när partneravtal godkänts.
    * Visar då automatiskt lagstadgad svensk "Annons"-märkning.
    */

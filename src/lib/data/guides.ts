@@ -1,3 +1,5 @@
+import type { AuthoritySourceId } from "./sources";
+
 export interface GuideSection {
   heading: string;
   body: string;
@@ -15,6 +17,7 @@ export interface ConsumerGuide {
   dateModified: string;
   sections: GuideSection[];
   relatedOperatorSlugs: string[];
+  sourceIds: AuthoritySourceId[];
   faqs: Array<{ question: string; answer: string }>;
 }
 
@@ -25,12 +28,13 @@ export const CONSUMER_GUIDES: ConsumerGuide[] = [
     title: "Därför nekas kortkvitton för taxi – och kvittot du måste kräva",
     category: "Taxi & Resegaranti",
     readTime: "3 min läsning",
-    dateModified: "2026-11-13",
+    dateModified: "2026-11-14",
     summary:
       "En av de vanligaste anledningarna till att SL, Västtrafik och Skånetrafiken avslår taxiersättning är fel kvitto. Så undviker du fällan redan i taxin.",
     keyTakeaway:
       "Tacka aldrig bara ja till kortterminalens lilla slips – be chauffören om ett specificerat taxameter- eller originalkvitto med sträcka, datum, klockslag och organisationsnummer.",
     relatedOperatorSlugs: ["sl", "vasttrafik", "skanetrafiken", "ul"],
+    sourceIds: ["lag-2015-953", "konsumentverket-kollektivtrafik", "konsumentverket-tag", "arn"],
     sections: [
       {
         heading: "Varför räcker inte vanligt bankkortskvitto?",
@@ -73,12 +77,13 @@ export const CONSUMER_GUIDES: ConsumerGuide[] = [
     title: "Extraordinära omständigheter på flyg: När bolaget luras eller har rätt",
     category: "Flyg · EU 261/2004",
     readTime: "4 min läsning",
-    dateModified: "2026-11-13",
+    dateModified: "2026-11-14",
     summary:
       "Många flygbolag avslår EU 261-krav reflexmässigt genom att hänvisa till extraordinära omständigheter. Lär dig skilja på verkliga undantag och vanliga driftfel.",
     keyTakeaway:
       "Tekniskt fel på flygplanet och intern flygbolagsstrejk är INTE extraordinära omständigheter. Dessutom gäller rätten till mat och hotell ALLTID – även vid snöstorm.",
     relatedOperatorSlugs: ["sas", "norwegian", "ryanair", "eu261-alla-flyg"],
+    sourceIds: ["eg-261-2004", "konsumentverket-flyg", "konsumentverket-flygkalkylatorn", "arn"],
     sections: [
       {
         heading: "Vad som INTE är extraordinärt (du ska ha 250–600 EUR)",
@@ -122,12 +127,19 @@ export const CONSUMER_GUIDES: ConsumerGuide[] = [
     title: "Så beräknas 30-dagarskort, årskort & Movingo vid tågförsening",
     category: "Periodkort & Schablon",
     readTime: "3 min läsning",
-    dateModified: "2026-11-13",
+    dateModified: "2026-11-14",
     summary:
       "Ett 30-dagarskort har inget fast pris per resa. Därför använder SL, Skånetrafiken och SJ helt olika matematiska schabloner när du begär förseningsersättning.",
     keyTakeaway:
       "SL ger fasta 6/9/12 kr (vuxen 30 dgr), Skånetrafiken delar biljettpriset på 44 resor (+30 % med värdekod), och SJ delar 30-dagars Snabbtåg på 22 resor.",
     relatedOperatorSlugs: ["sl", "skanetrafiken", "sj", "movingo"],
+    sourceIds: [
+      "lag-2015-953",
+      "eu-2021-782",
+      "scb-prisbasbelopp-2026",
+      "forordning-2025-872",
+      "konsumentverket-kollektivtrafik",
+    ],
     sections: [
       {
         heading: "Jämförelse av kända schabloner 2026",
@@ -162,12 +174,18 @@ export const CONSUMER_GUIDES: ConsumerGuide[] = [
     title: "Ta egen bil i stället för taxi vid inställt tåg: Regler & 25 kr/mil",
     category: "Alternativ transport",
     readTime: "3 min läsning",
-    dateModified: "2026-11-13",
+    dateModified: "2026-11-14",
     summary:
       "Du behöver inte alltid hitta en ledig taxi när bussen ställs in. Flera svenska länstrafikbolag ersätter egen bil eller skjuts med 25 kr per mil.",
     keyTakeaway:
       "Västtrafik, SL, Skånetrafiken, Hallandstrafiken, Östgötatrafiken och X-trafik ersätter egen bil vid > 20 min befarad försening – Västtrafik ersätter även trängselskatt & parkering.",
     relatedOperatorSlugs: ["vasttrafik", "sl", "hallandstrafiken", "xtrafik"],
+    sourceIds: [
+      "skatteverket-bilersattning",
+      "lag-2015-953",
+      "scb-prisbasbelopp-2026",
+      "konsumentverket-kollektivtrafik",
+    ],
     sections: [
       {
         heading: "Grundregeln för milersättning",
@@ -198,12 +216,19 @@ export const CONSUMER_GUIDES: ConsumerGuide[] = [
     title: "Tvåmånadersregeln vs 10 års preskription på flyg (NJA 2018 s. 127)",
     category: "Svensk juridik",
     readTime: "3 min läsning",
-    dateModified: "2026-11-13",
+    dateModified: "2026-11-14",
     summary:
       "Många internationella sajter säger att du har 3–6 år på dig att söka flygersättning. I Sverige kan du förlora allt om du inte reklamerar inom skälig tid.",
     keyTakeaway:
       "Högsta domstolen (NJA 2018 s. 127) slog fast att en reklamation inom 2 månader alltid anses vara i rätt tid. Skickar du kravet senare riskerar flygbolaget att vinna på sen reklamation.",
     relatedOperatorSlugs: ["sas", "norwegian", "ryanair", "eu261-alla-flyg"],
+    sourceIds: [
+      "nja-2018-s-127",
+      "preskriptionslag-1981-130",
+      "eg-261-2004",
+      "konsumentverket-flyg",
+      "arn",
+    ],
     sections: [
       {
         heading: "Så fungerar de två fristerna tillsammans i Sverige",
@@ -233,12 +258,13 @@ export const CONSUMER_GUIDES: ConsumerGuide[] = [
     title: "Rätt till mat, dryck & hotell: Även när ovädret stoppar flyget",
     category: "Omvårdnad · Artikel 9",
     readTime: "3 min läsning",
-    dateModified: "2026-11-13",
+    dateModified: "2026-11-14",
     summary:
       "Står du strandsatt på Arlanda eller Landvetter i timmar? Även om ingen 250–600 EUR-ersättning utgår vid snöstorm måste flygbolaget betala din mat och hotell.",
     keyTakeaway:
       "Vid 2–4 timmars väntan (beroende på distans) inträder Artikel 9: skälig mat, dryck, två samtal/mejl och hotell med transfer vid behov – spara kvittona!",
     relatedOperatorSlugs: ["sas", "norwegian", "ryanair", "eu261-alla-flyg"],
+    sourceIds: ["eg-261-2004", "konsumentverket-flyg", "konsumentverket-flygkalkylatorn", "arn"],
     sections: [
       {
         heading: "När slår rätten till omvårdnad till?",

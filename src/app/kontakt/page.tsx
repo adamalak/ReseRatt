@@ -5,7 +5,7 @@ import { SITE_CONFIG } from "@/lib/siteConfig";
 
 export const metadata: Metadata = buildPageMetadata({
   title: `Kontakt & rättelser – ${SITE_CONFIG.name}`,
-  description: `Rapportera ändrade biljett- eller taxivillkor, felaktiga länkar eller ge förslag på nya funktioner till ${SITE_CONFIG.name}.`,
+  description: `Kontakta ${SITE_CONFIG.name} via ${SITE_CONFIG.contactEmail} för rättelser och frågor, eller rapportera tekniska fel öppet på GitHub.`,
   path: "/kontakt",
 });
 
@@ -33,6 +33,9 @@ export default function KontaktPage() {
         <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">
           Kontakt &amp; rättelser
         </h1>
+        <p className="font-mono-num mt-2 text-xs text-stone-500">
+          {SITE_CONFIG.publisherName}
+        </p>
         <p className="mt-3 text-sm leading-relaxed text-stone-600 sm:text-base">
           Har ett trafikbolag ändrat sitt maxbelopp för taxi, uppdaterat sina ansökningslänkar
           eller hittat något i en kalkylator som bör justeras?
@@ -51,20 +54,41 @@ export default function KontaktPage() {
             </p>
           </section>
 
-          <section>
-            <h2 className="text-base font-bold text-zinc-900">Skicka förslag eller rättelse</h2>
+          <section className="rounded-md border border-[#CBD5E1] bg-[#EEF3F8] p-5">
+            <h2 className="text-base font-bold text-zinc-900">
+              Kontakt för konsumenter, rättelser &amp; press
+            </h2>
             <p className="mt-2">
-              Projektets kod och regeldata underhålls öppet via GitHub. Du kan alltid lämna en
-              felrapport eller förslag på nya trafikbolag via projektägarens GitHub-profil:
+              Hittat en inaktuell regel, ändrad schablon eller vill komma i kontakt med redaktionen
+              bakom {SITE_CONFIG.domainLabel}? Mejla oss direkt på:
+            </p>
+            <p className="mt-3">
+              <a
+                href={`mailto:${SITE_CONFIG.contactEmail}`}
+                className="inline-flex items-center rounded-md bg-[#143A66] px-4 py-2 text-xs font-semibold text-white hover:bg-[#0E294A]"
+              >
+                {SITE_CONFIG.contactEmail}
+              </a>
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-base font-bold text-zinc-900">
+              Öppen källgranskning &amp; teknisk felrapportering
+            </h2>
+            <p className="mt-2">
+              Projektets beräkningskod, enhetstester och regeldata underhålls öppet via GitHub.
+              Utvecklare och granskare kan alltid öppna en issue eller granska ändringshistoriken
+              direkt i kodbasen:
             </p>
             <p className="mt-3">
               <a
                 href={SITE_CONFIG.githubRepoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center rounded-md bg-[#143A66] px-4 py-2 text-xs font-semibold text-white hover:bg-[#0E294A]"
+                className="inline-flex items-center rounded-md border border-stone-300 bg-white px-4 py-2 text-xs font-semibold text-[#143A66] hover:bg-stone-100"
               >
-                Öppna GitHub (feedback &amp; issues) &rarr;
+                Öppna GitHub-repot (källkod &amp; issues) &rarr;
               </a>
             </p>
           </section>

@@ -3,6 +3,9 @@ import { RULES_YEAR } from "./data/constants";
 export const SITE_CONFIG = {
   name: "ReseRätt",
   domainLabel: "ReseRätt.se",
+  publisherName: "ReseRätt.se – Oberoende konsumentverktyg för passagerarrättigheter",
+  contactEmail: "kontakt@reseratt.se",
+  lastReviewedDate: "2026-11-14",
   tagline:
     "Oberoende svensk kalkylator och checklista för förseningsersättning på tåg, lokaltrafik och flyg (EU 261/2004).",
   year: RULES_YEAR,
@@ -25,9 +28,7 @@ export const SITE_CONFIG = {
     { href: "/reklamationsmall", label: "Reklamationsmall", shortLabel: "Kravbrev" },
     { href: "/guider", label: "Guider & regler", shortLabel: "Guider" },
   ],
-  sisterSiteUrl: "https://kollapengar.se",
-  sisterSiteName: "KollaPengarna",
-  githubRepoUrl: "https://github.com/adamalak",
+  githubRepoUrl: "https://github.com/adamalak/ReseRatt",
   /**
    * IndexNow-nyckel för snabbare indexering i Bing & ChatGPT Search.
    * Motsvarande .txt-fil ligger i public/.

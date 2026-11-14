@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { AuthoritySourcesList } from "@/components/AuthoritySourcesList";
 import { FaqSection } from "@/components/FaqSection";
 import { CONSUMER_GUIDES, getGuideBySlug } from "@/lib/data/guides";
 import { getOperatorBySlug } from "@/lib/data/operators";
+import { getAuthoritySources } from "@/lib/data/sources";
 import { buildArticleJsonLd, buildBreadcrumbJsonLd, buildPageMetadata } from "@/lib/seo";
+import { SITE_CONFIG } from "@/lib/siteConfig";
 
 interface GuidePageProps {
   params: Promise<{ slug: string }>;
@@ -33,6 +36,7 @@ export default async function GuideDetailPage({ params }: GuidePageProps) {
   const relatedOps = guide.relatedOperatorSlugs
     .map((s) => getOperatorBySlug(s))
     .filter((o): o is NonNullable<typeof o> => Boolean(o));
+  const guideSources = getAuthoritySources(guide.sourceIds);
 
   const jsonLd = [
     buildBreadcrumbJsonLd([
@@ -74,8 +78,16 @@ export default async function GuideDetailPage({ params }: GuidePageProps) {
           <span className="text-stone-400">&middot;</span>
           <span className="font-mono-num text-stone-500">{guide.readTime}</span>
           <span className="text-stone-400">&middot;</span>
-          <span className="font-mono-num text-stone-500">Uppdaterad {guide.dateModified}</span>
+          <span className="font-mono-num text-stone-500">
+            Senast granskad {guide.dateModified}
+          </span>
         </div>
+        <p className="mt-1.5 text-xs text-stone-500">
+          Granskad av{" "}
+          <Link href="/om" className="font-medium text-[#143A66] underline">
+            {SITE_CONFIG.publisherName}
+          </Link>
+        </p>
 
         <h1 className="mt-3 text-2xl font-semibold tracking-tight text-zinc-900 sm:text-4xl">
           {guide.title}
@@ -112,6 +124,15 @@ export default async function GuideDetailPage({ params }: GuidePageProps) {
             </section>
           ))}
         </div>
+
+        {guideSources.length > 0 && (
+          <div className="mt-8 border-t border-stone-200 pt-6">
+            <AuthoritySourcesList
+              title="Primärkällor & regelverk för den här guiden"
+              sources={guideSources}
+            />
+          </div>
+        )}
 
         {relatedOps.length > 0 && (
           <div className="mt-8 border-t border-stone-200 pt-6">

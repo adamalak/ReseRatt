@@ -14,14 +14,12 @@ export function Footer() {
               All beräkning sker lokalt i din webbläsare utan databas eller spårningscookies.
             </p>
             <p className="mt-3 text-xs text-stone-500">
-              Syskonprojekt till{" "}
+              {SITE_CONFIG.publisherName}. Frågor &amp; rättelser:{" "}
               <a
-                href={SITE_CONFIG.sisterSiteUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={`mailto:${SITE_CONFIG.contactEmail}`}
                 className="font-medium text-[#143A66] underline"
               >
-                {SITE_CONFIG.sisterSiteName}
+                {SITE_CONFIG.contactEmail}
               </a>
               .
             </p>

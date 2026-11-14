@@ -92,13 +92,15 @@ export function buildArticleJsonLd(input: {
     dateModified: input.dateModified,
     author: {
       "@type": "Organization",
-      name: SITE_CONFIG.name,
+      name: SITE_CONFIG.publisherName,
       url: SITE_CONFIG.url,
+      email: SITE_CONFIG.contactEmail,
     },
     publisher: {
       "@type": "Organization",
       name: SITE_CONFIG.name,
       url: SITE_CONFIG.url,
+      email: SITE_CONFIG.contactEmail,
     },
   };
 }

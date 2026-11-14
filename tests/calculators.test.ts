@@ -8,6 +8,8 @@ import {
 } from "@/lib/data/constants";
 import { CONSUMER_GUIDES } from "@/lib/data/guides";
 import { OPERATORS } from "@/lib/data/operators";
+import { AUTHORITY_SOURCES, getAuthoritySources } from "@/lib/data/sources";
+import { SITE_CONFIG } from "@/lib/siteConfig";
 
 describe("2026 svenska regelkonstanter", () => {
   it("härleder 1/20 och 1/40 av 2026 års prisbasbelopp exakt", () => {
@@ -274,5 +276,24 @@ describe("calculateFlightCompensation", () => {
     expect(earlyCancel.eligibleForCashCompensation).toBe(false);
     expect(earlyCancel.totalEur).toBe(0);
     expect(earlyCancel.refundRightActive).toBe(true);
+  });
+
+  it("har verifierade myndighetskällor på alla guider samt korrekt avsändare utan korslänkning", () => {
+    expect(AUTHORITY_SOURCES.length).toBeGreaterThanOrEqual(10);
+    for (const source of AUTHORITY_SOURCES) {
+      expect(source.url.startsWith("https://")).toBe(true);
+      expect(source.title.length).toBeGreaterThan(3);
+    }
+
+    for (const guide of CONSUMER_GUIDES) {
+      expect(guide.sourceIds.length).toBeGreaterThanOrEqual(3);
+      const resolved = getAuthoritySources(guide.sourceIds);
+      expect(resolved.length).toBe(guide.sourceIds.length);
+    }
+
+    expect(SITE_CONFIG.url).toBe("https://reseratt.se");
+    expect(SITE_CONFIG.contactEmail).toBe("kontakt@reseratt.se");
+    expect(SITE_CONFIG.publisherName).toContain("ReseRätt.se");
+    expect("sisterSiteUrl" in SITE_CONFIG).toBe(false);
   });
 });

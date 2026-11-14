@@ -1,13 +1,20 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ONE_FORTIETH_PBB_2026, ONE_TWENTIETH_PBB_2026, PRISBASBELOPP_2026 } from "@/lib/data/constants";
+import { AuthoritySourcesList } from "@/components/AuthoritySourcesList";
+import {
+  ONE_FORTIETH_PBB_2026,
+  ONE_TWENTIETH_PBB_2026,
+  OWN_CAR_KR_PER_MIL,
+  PRISBASBELOPP_2026,
+} from "@/lib/data/constants";
+import { AUTHORITY_SOURCES } from "@/lib/data/sources";
 import { formatSEK } from "@/lib/format";
 import { buildBreadcrumbJsonLd, buildPageMetadata } from "@/lib/seo";
 import { SITE_CONFIG } from "@/lib/siteConfig";
 
 export const metadata: Metadata = buildPageMetadata({
   title: `Om ${SITE_CONFIG.name} & vår källmetod (${SITE_CONFIG.year})`,
-  description: `Läs om hur ${SITE_CONFIG.name} tar fram beräkningar för tåg-, lokaltrafik- och flygersättning utifrån svenska lagar, prisbasbelopp ${SITE_CONFIG.year} och trafikbolagens resevillkor.`,
+  description: `Läs om hur ${SITE_CONFIG.name} granskas och uppdateras utifrån svensk lagtext, prisbasbelopp ${SITE_CONFIG.year}, Skatteverket, Konsumentverket och trafikbolagens resevillkor.`,
   path: "/om",
 });
 
@@ -35,47 +42,59 @@ export default function OmPage() {
         <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">
           Om {SITE_CONFIG.name} &amp; vår källmetod
         </h1>
+        <p className="font-mono-num mt-2 text-xs text-stone-500">
+          Utgivare: {SITE_CONFIG.publisherName} &middot; Senast granskad:{" "}
+          {SITE_CONFIG.lastReviewedDate} &middot; Regelår: {SITE_CONFIG.year}
+        </p>
         <p className="mt-3 text-sm leading-relaxed text-stone-600 sm:text-base">
           {SITE_CONFIG.name} är ett oberoende svenskt konsumentverktyg skapat för att ge resenärer
-          ett snabbt och begripligt svar mitt i en försening – utan reklamkrångel, krav på
+          ett snabbt, kontrollerbart svar mitt i en försening – utan reklamkrångel, krav på
           inloggning eller dyra ombudsavgifter.
         </p>
 
-        <div className="mt-8 space-y-6 text-sm leading-relaxed text-stone-700">
-          <section>
+        <div className="mt-8 space-y-7 text-sm leading-relaxed text-stone-700">
+          <section className="rounded-md border border-[#CBD5E1] bg-[#EEF3F8] p-5">
             <h2 className="font-editorial text-lg font-semibold text-zinc-900">
-              Vilka källor och lagar bygger kalkylatorerna på?
+              Så granskas och uppdateras våra beräkningar
             </h2>
             <ul className="mt-2.5 list-disc space-y-2 pl-5">
               <li>
-                <strong>Lagen om kollektivtrafikresenärers rättigheter (2015:953):</strong> Styr
-                bussar, tunnelbana, spårvagn och tåg vars totala linjesträcka är kortare än 150 km
-                (50 % vid 20 min, 75 % vid 40 min och 100 % vid 60+ min).
+                <strong>Kontroll mot primärkällor:</strong> Samtliga ersättningsnivåer och
+                tidsgränser kontrolleras direkt mot svensk författningstext (SFS), EU-förordningar,
+                Högsta domstolens praxis och respektive trafikbolags aktuella resevillkor.
               </li>
               <li>
-                <strong>EU:s tågpassagerarförordning (2021/782):</strong> Styr längre tågsträckor
-                från 150 km och uppåt (25 % vid 60 min och 50 % vid 120+ min).
-              </li>
-              <li>
-                <strong>EU-förordning 261/2004 &amp; Högsta domstolen (NJA 2018 s. 127):</strong>{" "}
-                250–600 EUR i flygersättning, Artikel 9 omvårdnadsrätt samt svensk reklamation inom
-                2 månader (skälig tid) och 10 års preskription.
-              </li>
-              <li>
-                <strong>Fastställt prisbasbelopp {SITE_CONFIG.year}:</strong>{" "}
+                <strong>Fastställda nyckeltal för {SITE_CONFIG.year}:</strong>{" "}
+                Prisbasbeloppet är{" "}
                 <span className="font-mono-num font-semibold">{formatSEK(PRISBASBELOPP_2026)}</span>{" "}
-                (ger 1/20 ={" "}
+                (vilket ger taxitaken 1/20 ={" "}
                 <span className="font-mono-num font-semibold">
                   {formatSEK(ONE_TWENTIETH_PBB_2026)}
                 </span>{" "}
-                hos t.ex. Skånetrafiken och 1/40 ={" "}
+                och 1/40 ={" "}
                 <span className="font-mono-num font-semibold">
                   {formatSEK(ONE_FORTIETH_PBB_2026)}
-                </span>{" "}
-                hos t.ex. SL, UL, Mälartåg och X-trafik).
+                </span>
+                ) och bilersättningen är{" "}
+                <span className="font-mono-num font-semibold">{OWN_CAR_KR_PER_MIL} kr/mil</span>.
+              </li>
+              <li>
+                <strong>Årlig &amp; löpande revidering:</strong> Regelkonstanterna revideras i
+                januari varje år när nytt prisbasbelopp träder i kraft, samt löpande vid ändrade
+                resevillkor eller länkvägar hos bolagen.
+              </li>
+              <li>
+                <strong>Automatiserad regelverifiering:</strong> Beräkningslogiken verifieras
+                löpande med automatiska enhetstester innan varje ny version publiceras.
               </li>
             </ul>
           </section>
+
+          <AuthoritySourcesList
+            title="Primärkällor, lagar och myndigheter vi lutar oss mot"
+            intro="Här hittar du de officiella lagtexter, förordningar, domstolsavgöranden och myndighetssidor som våra kalkylatorer och guider bygger på:"
+            sources={AUTHORITY_SOURCES}
+          />
 
           <section>
             <h2 className="font-editorial text-lg font-semibold text-zinc-900">
@@ -84,25 +103,61 @@ export default function OmPage() {
             <p className="mt-2">
               Många ersättningsföretag tar 25–35 % i provision för ärenden som du kan fylla i på
               3 minuter direkt hos trafik- eller flygbolaget. Vi länkar därför alltid till bolagens
-              egna formulär i första hand så att du behåller 100 % av dina pengar.
+              egna formulär i första hand så att du behåller 100 % av dina pengar, samt till{" "}
+              <a
+                href="https://www.arn.se/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-[#143A66] underline"
+              >
+                ARN
+              </a>{" "}
+              och{" "}
+              <a
+                href="https://www.konsumentverket.se/varor-och-tjanster/resor/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-[#143A66] underline"
+              >
+                Konsumentverket
+              </a>{" "}
+              om ett bolag avslår ett befogat krav.
             </p>
           </section>
 
-          <section>
+          <section className="rounded-md border border-stone-200 bg-white p-5">
             <h2 className="font-editorial text-lg font-semibold text-zinc-900">
-              Syskonprojekt
+              Avsändare, kontakt &amp; öppen källgranskning
             </h2>
             <p className="mt-2">
-              {SITE_CONFIG.name} drivs som ett fristående systerprojekt till{" "}
+              <strong>Avsändare:</strong> {SITE_CONFIG.publisherName}
+            </p>
+            <p className="mt-1.5">
+              <strong>Rättelser, frågor &amp; redaktionell kontakt:</strong>{" "}
               <a
-                href={SITE_CONFIG.sisterSiteUrl}
+                href={`mailto:${SITE_CONFIG.contactEmail}`}
+                className="font-semibold text-[#143A66] underline"
+              >
+                {SITE_CONFIG.contactEmail}
+              </a>{" "}
+              (se även vår{" "}
+              <Link href="/kontakt" className="font-medium text-[#143A66] underline">
+                kontaktsida
+              </Link>
+              ).
+            </p>
+            <p className="mt-1.5">
+              <strong>Öppen källgranskning:</strong> Hela kodbasen och samtliga regeldata kan
+              granskas öppet på{" "}
+              <a
+                href={SITE_CONFIG.githubRepoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-semibold text-[#143A66] underline"
               >
-                {SITE_CONFIG.sisterSiteName}
-              </a>{" "}
-              (gratis svenska kalkylatorer för lön, kommunalskatt, CSN och ISK).
+                GitHub (ReseRätt)
+              </a>
+              .
             </p>
           </section>
         </div>

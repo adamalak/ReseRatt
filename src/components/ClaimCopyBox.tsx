@@ -7,12 +7,14 @@ interface ClaimCopyBoxProps {
   title?: string;
   primaryText: string;
   secondaryEnglishText?: string;
+  compact?: boolean;
 }
 
 export function ClaimCopyBox({
   title = "Färdig reklamationstext (att klistra in i formulär eller e-post)",
   primaryText,
   secondaryEnglishText,
+  compact = false,
 }: ClaimCopyBoxProps) {
   const [lang, setLang] = useState<"sv" | "en">("sv");
   const [copied, setCopied] = useState(false);
@@ -26,26 +28,30 @@ export function ClaimCopyBox({
       setCopied(true);
       setTimeout(() => setCopied(false), 2200);
     } catch {
-      // Clipboard may be unavailable
+      // Clipboard may be unavailable in restricted contexts
     }
   };
 
   return (
-    <div className="rounded-lg border border-[#DDD9CE] bg-[#FAF9F6] p-4 sm:p-5">
+    <div
+      className={`rounded border border-[#CBD5E1] bg-[#F8FAFC] ${
+        compact ? "p-3.5" : "p-4 sm:p-5"
+      }`}
+    >
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-stone-600 uppercase">
-          <FileText className="h-4 w-4 text-[#143A66]" />
+        <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-[#0B1F3A] uppercase">
+          <FileText className="h-4 w-4 text-[#0B1F3A]" aria-hidden="true" />
           <span>{title}</span>
         </div>
 
         <div className="flex items-center gap-2">
           {secondaryEnglishText && (
-            <div className="inline-flex rounded-md border border-stone-300 bg-white p-0.5 text-xs">
+            <div className="inline-flex rounded-[3px] border border-[#CBD5E1] bg-white p-0.5 text-xs">
               <button
                 type="button"
                 onClick={() => setLang("sv")}
-                className={`rounded px-2 py-0.5 font-medium ${
-                  lang === "sv" ? "bg-[#143A66] text-white" : "text-stone-600"
+                className={`rounded-[2px] px-2 py-0.5 font-semibold ${
+                  lang === "sv" ? "bg-[#0B1F3A] text-white" : "text-slate-600"
                 }`}
               >
                 Svenska
@@ -53,8 +59,8 @@ export function ClaimCopyBox({
               <button
                 type="button"
                 onClick={() => setLang("en")}
-                className={`rounded px-2 py-0.5 font-medium ${
-                  lang === "en" ? "bg-[#143A66] text-white" : "text-stone-600"
+                className={`rounded-[2px] px-2 py-0.5 font-semibold ${
+                  lang === "en" ? "bg-[#0B1F3A] text-white" : "text-slate-600"
                 }`}
               >
                 English
@@ -65,16 +71,16 @@ export function ClaimCopyBox({
           <button
             type="button"
             onClick={handleCopy}
-            className="inline-flex items-center gap-1.5 rounded-md bg-[#143A66] px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-[#0E294A]"
+            className="inline-flex items-center gap-1.5 rounded-[4px] bg-[#0B1F3A] px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-[#163763]"
           >
             {copied ? (
               <>
-                <Check className="h-3.5 w-3.5" />
+                <Check className="h-3.5 w-3.5" aria-hidden="true" />
                 <span>Kopierad!</span>
               </>
             ) : (
               <>
-                <Copy className="h-3.5 w-3.5" />
+                <Copy className="h-3.5 w-3.5" aria-hidden="true" />
                 <span>Kopiera kravtext</span>
               </>
             )}
@@ -82,7 +88,11 @@ export function ClaimCopyBox({
         </div>
       </div>
 
-      <pre className="mt-3 max-h-64 overflow-auto whitespace-pre-wrap rounded-md border border-stone-200 bg-white p-3.5 font-sans text-xs leading-relaxed text-zinc-800">
+      <pre
+        className={`mt-3 overflow-auto whitespace-pre-wrap rounded-[3px] border border-[#CBD5E1] bg-white p-3 font-sans text-xs leading-relaxed text-[#0F172A] tabular-nums ${
+          compact ? "max-h-56" : "max-h-72"
+        }`}
+      >
         {displayedText}
       </pre>
     </div>

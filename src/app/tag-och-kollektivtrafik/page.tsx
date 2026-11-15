@@ -17,7 +17,7 @@ const FAQ_ITEMS: FaqItem[] = [
   {
     question: "När gäller 20 minuter och när gäller 60 minuter på tåg?",
     answer:
-      "På lokaltrafik och tåg vars totala linjesträcka (från första till sista station) är kortare än 150 km (15 mil) gäller Lagen om kollektivtrafikresenärers rättigheter: 50 % från 20 min, 75 % från 40 min och 100 % från 60 min. Är tågets totala linje 150 km eller längre gäller EU:s tågpassagerarförordning: 25 % vid 60–119 min och 50 % vid 120+ min.",
+      "På lokaltrafik och tåg vars totala linjesträcka (från första till sista station) är kortare än 150 km (15 mil) gäller Lag (2015:953) om kollektivtrafikresenärers rättigheter: 50 % från 20 min, 75 % från 40 min och 100 % från 60 min. Är tågets totala linje 150 km eller längre gäller EU:s tågpassagerarförordning (EU) 2021/782: 25 % vid 60–119 min och 50 % vid 120+ min.",
   },
   {
     question: "Vad är maxbeloppet för taxi år 2026?",
@@ -51,33 +51,28 @@ export default function TransitPage() {
   ];
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
+    <div className="mx-auto max-w-6xl px-4 py-4 sm:px-6 sm:py-6">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <nav aria-label="Brödsmulor" className="mb-4 text-xs font-medium text-stone-500">
-        <Link href="/" className="hover:text-[#143A66] hover:underline">
-          Hem
-        </Link>
-        <span className="mx-2">/</span>
-        <span className="text-zinc-900">Tåg &amp; kollektivtrafik</span>
-      </nav>
-
-      <header className="mb-8 max-w-3xl">
-        <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-4xl">
+      <div className="mb-4 border-b border-[#CBD5E1] pb-2.5 print:hidden">
+        <nav aria-label="Brödsmulor" className="hidden text-xs font-medium text-slate-500 sm:block">
+          <Link href="/" className="hover:text-[#0B1F3A] hover:underline">
+            Hem
+          </Link>
+          <span className="mx-2">/</span>
+          <span className="text-[#0F172A]">Tåg &amp; kollektivtrafik</span>
+        </nav>
+        <h1 className="mt-0.5 text-lg font-bold tracking-tight text-[#0B1F3A] sm:text-2xl">
           Förseningsersättning på tåg, pendeltåg &amp; buss ({SITE_CONFIG.year})
         </h1>
-        <p className="mt-2.5 text-sm leading-relaxed text-stone-600 sm:text-base">
-          Välj trafikbolag, biljettyp och försening så ser du direkt biljettavdrag, taxitak och
-          vilka kvitton/bevis du måste spara på perrongen.
-        </p>
-      </header>
+      </div>
 
       <TransitCalculator initialOperatorSlug="sj" />
 
-      <section className="mt-12 rounded-lg border border-[#DDD9CE] bg-white p-6">
-        <h2 className="font-editorial text-xl font-semibold text-zinc-900">
+      <section className="mt-10 rounded border border-[#CBD5E1] bg-white p-5 sm:p-6 print:hidden">
+        <h2 className="font-editorial text-xl font-semibold text-[#0B1F3A]">
           Välj specifik operatörssida
         </h2>
         <div className="mt-4 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
@@ -85,10 +80,10 @@ export default function TransitPage() {
             <Link
               key={op.slug}
               href={`/bolag/${op.slug}`}
-              className="flex items-center justify-between rounded-md border border-stone-200 bg-[#FAF9F6] px-4 py-3 text-sm font-semibold text-zinc-900 transition hover:border-[#143A66] hover:text-[#143A66]"
+              className="flex items-center justify-between rounded-[4px] border border-[#CBD5E1] bg-[#F8FAFC] px-4 py-3 text-sm font-semibold text-[#0F172A] transition hover:border-[#0B1F3A] hover:text-[#0B1F3A]"
             >
               <span>{op.name}</span>
-              <span className="text-xs text-stone-500">{op.delayThresholdMinutes}+ min</span>
+              <span className="font-mono-num text-xs text-slate-600">{op.delayThresholdMinutes}+ min</span>
             </Link>
           ))}
         </div>

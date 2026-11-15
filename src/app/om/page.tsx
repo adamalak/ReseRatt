@@ -25,36 +25,36 @@ export default function OmPage() {
   ]);
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12">
+    <div className="mx-auto max-w-3xl px-4 py-6 sm:px-6 sm:py-8">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <nav aria-label="Brödsmulor" className="mb-4 text-xs font-medium text-stone-500">
-        <Link href="/" className="hover:text-[#143A66] hover:underline">
+      <nav aria-label="Brödsmulor" className="mb-3 text-xs font-medium text-slate-500">
+        <Link href="/" className="hover:text-[#0B1F3A] hover:underline">
           Hem
         </Link>
         <span className="mx-2">/</span>
-        <span className="text-zinc-900">Om ReseRätt</span>
+        <span className="text-[#0F172A]">Om ReseRätt</span>
       </nav>
 
-      <div className="rounded-lg border border-[#DDD9CE] bg-white p-6 sm:p-10">
-        <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">
+      <div className="rounded border border-[#CBD5E1] bg-white p-6 sm:p-10">
+        <h1 className="text-2xl font-semibold tracking-tight text-[#0B1F3A] sm:text-3xl">
           Om {SITE_CONFIG.name} &amp; vår källmetod
         </h1>
-        <p className="font-mono-num mt-2 text-xs text-stone-500">
+        <p className="font-mono-num mt-2 text-xs text-slate-500">
           Utgivare: {SITE_CONFIG.publisherName} &middot; Senast granskad:{" "}
           {SITE_CONFIG.lastReviewedDate} &middot; Regelår: {SITE_CONFIG.year}
         </p>
-        <p className="mt-3 text-sm leading-relaxed text-stone-600 sm:text-base">
+        <p className="mt-3 text-sm leading-relaxed text-slate-600 sm:text-base">
           {SITE_CONFIG.name} är ett oberoende svenskt konsumentverktyg skapat för att ge resenärer
           ett snabbt, kontrollerbart svar mitt i en försening – utan reklamkrångel, krav på
           inloggning eller dyra ombudsavgifter.
         </p>
 
-        <div className="mt-8 space-y-7 text-sm leading-relaxed text-stone-700">
-          <section className="rounded-md border border-[#CBD5E1] bg-[#EEF3F8] p-5">
-            <h2 className="font-editorial text-lg font-semibold text-zinc-900">
+        <div className="mt-8 space-y-7 text-sm leading-relaxed text-slate-700">
+          <section className="rounded border border-[#CBD5E1] border-l-4 border-l-[#0B1F3A] bg-[#F8FAFC] p-5">
+            <h2 className="font-editorial text-lg font-semibold text-[#0B1F3A]">
               Så granskas och uppdateras våra beräkningar
             </h2>
             <ul className="mt-2.5 list-disc space-y-2 pl-5">
@@ -97,7 +97,7 @@ export default function OmPage() {
           />
 
           <section>
-            <h2 className="font-editorial text-lg font-semibold text-zinc-900">
+            <h2 className="font-editorial text-lg font-semibold text-[#0B1F3A]">
               Varför uppmanar vi dig att söka direkt själv?
             </h2>
             <p className="mt-2">
@@ -108,7 +108,7 @@ export default function OmPage() {
                 href="https://www.arn.se/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-medium text-[#143A66] underline"
+                className="font-semibold text-[#0B1F3A] underline"
               >
                 ARN
               </a>{" "}
@@ -117,7 +117,7 @@ export default function OmPage() {
                 href="https://www.konsumentverket.se/varor-och-tjanster/resor/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-medium text-[#143A66] underline"
+                className="font-semibold text-[#0B1F3A] underline"
               >
                 Konsumentverket
               </a>{" "}
@@ -125,8 +125,8 @@ export default function OmPage() {
             </p>
           </section>
 
-          <section className="rounded-md border border-stone-200 bg-white p-5">
-            <h2 className="font-editorial text-lg font-semibold text-zinc-900">
+          <section className="rounded border border-[#CBD5E1] bg-white p-5">
+            <h2 className="font-editorial text-lg font-semibold text-[#0B1F3A]">
               Avsändare, kontakt &amp; öppen källgranskning
             </h2>
             <p className="mt-2">
@@ -136,12 +136,12 @@ export default function OmPage() {
               <strong>Rättelser, frågor &amp; redaktionell kontakt:</strong>{" "}
               <a
                 href={`mailto:${SITE_CONFIG.contactEmail}`}
-                className="font-semibold text-[#143A66] underline"
+                className="font-semibold text-[#0B1F3A] underline"
               >
                 {SITE_CONFIG.contactEmail}
               </a>{" "}
               (se även vår{" "}
-              <Link href="/kontakt" className="font-medium text-[#143A66] underline">
+              <Link href="/kontakt" className="font-semibold text-[#0B1F3A] underline">
                 kontaktsida
               </Link>
               ).
@@ -153,7 +153,7 @@ export default function OmPage() {
                 href={SITE_CONFIG.githubRepoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-semibold text-[#143A66] underline"
+                className="font-semibold text-[#0B1F3A] underline"
               >
                 GitHub (ReseRätt)
               </a>

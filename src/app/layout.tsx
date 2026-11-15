@@ -62,7 +62,7 @@ export default function RootLayout({
       lang="sv"
       className={`${ibmPlexSans.variable} ${newsreader.variable} ${ibmPlexMono.variable}`}
     >
-      <body className="flex min-h-screen flex-col bg-[#F6F5F1] text-zinc-900">
+      <body className="flex min-h-screen flex-col bg-[#F8FAFC] text-[#0F172A] antialiased">
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />

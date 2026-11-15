@@ -50,33 +50,28 @@ export default function FlygersattningPage() {
   ];
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
+    <div className="mx-auto max-w-6xl px-4 py-4 sm:px-6 sm:py-6">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <nav aria-label="Brödsmulor" className="mb-4 text-xs font-medium text-stone-500">
-        <Link href="/" className="hover:text-[#143A66] hover:underline">
-          Hem
-        </Link>
-        <span className="mx-2">/</span>
-        <span className="text-zinc-900">Flygersättning (EU 261/2004)</span>
-      </nav>
-
-      <header className="mb-8 max-w-3xl">
-        <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-4xl">
-          Flygersättning EU 261/2004 – Sök gratis själv ({SITE_CONFIG.year})
+      <div className="mb-4 border-b border-[#CBD5E1] pb-2.5 print:hidden">
+        <nav aria-label="Brödsmulor" className="hidden text-xs font-medium text-slate-500 sm:block">
+          <Link href="/" className="hover:text-[#0B1F3A] hover:underline">
+            Hem
+          </Link>
+          <span className="mx-2">/</span>
+          <span className="text-[#0F172A]">Flygersättning (EU 261/2004)</span>
+        </nav>
+        <h1 className="mt-0.5 text-lg font-bold tracking-tight text-[#0B1F3A] sm:text-2xl">
+          Flygersättning EU 261/2004 &ndash; Sök gratis själv ({SITE_CONFIG.year})
         </h1>
-        <p className="mt-2.5 text-sm leading-relaxed text-stone-600 sm:text-base">
-          Kolla om ditt försenade, inställda eller överbokade flyg ger rätt till 250–600 EUR per
-          person – plus direktlänkar till flygbolagen och färdig kravtext.
-        </p>
-      </header>
+      </div>
 
       <FlightCalculator initialAirlineSlug="sas" />
 
-      <section className="mt-12 rounded-lg border border-[#DDD9CE] bg-white p-6">
-        <h2 className="font-editorial text-xl font-semibold text-zinc-900">
+      <section className="mt-10 rounded border border-[#CBD5E1] bg-white p-5 sm:p-6 print:hidden">
+        <h2 className="font-editorial text-xl font-semibold text-[#0B1F3A]">
           Flygbolagsspecifika guider
         </h2>
         <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -84,7 +79,7 @@ export default function FlygersattningPage() {
             <Link
               key={op.slug}
               href={`/bolag/${op.slug}`}
-              className="rounded-md border border-stone-200 bg-[#FAF9F6] p-4 text-sm font-semibold text-zinc-900 transition hover:border-[#143A66] hover:text-[#143A66]"
+              className="rounded-[4px] border border-[#CBD5E1] bg-[#F8FAFC] p-4 text-sm font-semibold text-[#0F172A] transition hover:border-[#0B1F3A] hover:text-[#0B1F3A]"
             >
               {op.name}
             </Link>

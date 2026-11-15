@@ -31,6 +31,12 @@ export interface FlightCalculationInput {
   passengerCount: number;
   waitingHoursAtAirport: number;
   reasonableCareExpensesKr: number;
+  /** Valfria ärendeuppgifter som fylls direkt i färdig kravtext och A4-underlag. */
+  travelDate?: string;
+  flightNumber?: string;
+  bookingRef?: string;
+  routeDescription?: string;
+  passengerName?: string;
 }
 
 export interface FlightCalculationResult {
@@ -151,16 +157,23 @@ export function calculateFlightCompensation(
         ? "> 3 500 km utanför EU"
         : "1 500–3 500 km / > 1 500 km inom EU";
 
+  const pnrLabel = raw.bookingRef?.trim() || "[PNR]";
+  const flightLabel = raw.flightNumber?.trim() || "[FLIGHTNR]";
+  const dateLabel = raw.travelDate?.trim() || "[DATUM]";
+  const routeLabel = raw.routeDescription?.trim() || "[AVGÅNG – ANKOMST]";
+  const senderLabelSv = raw.passengerName?.trim() || "[DITT NAMN & KONTAKTUPPGIFTER]";
+  const senderLabelEn = raw.passengerName?.trim() || "[YOUR FULL NAME]";
+
   const claimTextSwedish = [
-    `Ämne: Krav på ersättning enligt EU-förordning 261/2004 – Bokning [PNR]`,
+    `Ämne: Krav på ersättning enligt EU-förordning 261/2004 – Bokning ${pnrLabel} (${dateLabel})`,
     ``,
     `Hej ${airline.shortName},`,
     ``,
-    `Jag ansöker härmed om kompensation samt eventuell ersättning för utlägg enligt Europaparlamentets och rådets förordning (EG) nr 261/2004.`,
+    `Jag ansöker härmed om kompensation samt eventuell ersättning för utlägg enligt Europaparlamentets och rådets förordning (EG) nr 261/2004 (reklamerat i rätt tid enligt NJA 2018 s. 127).`,
     ``,
-    `• Bokningsreferens (PNR): [FYLL I PNR]`,
-    `• Flightnummer & datum: [FYLL I FLIGHTNR OCH DATUM]`,
-    `• Sträcka: [AVGÅNG] – [ANKOMST] (${distanceText})`,
+    `• Bokningsreferens (PNR): ${pnrLabel}`,
+    `• Flightnummer & datum: ${flightLabel}, ${dateLabel}`,
+    `• Sträcka: ${routeLabel} (${distanceText})`,
     `• Antal passagerare i ansökan: ${passengerCount} st`,
     `• Händelse: ${
       raw.disruptionType === "delay"
@@ -172,7 +185,7 @@ export function calculateFlightCompensation(
             : `Inställt flyg`
     }`,
     eligibleForCashCompensation
-      ? `• Yrkad schablonersättning: ${formatEUR(totalEur)} (${passengerCount} x ${formatEUR(effectivePerPassengerEur)})`
+      ? `• Yrkad schablonersättning: ${formatEUR(totalEur)} (${passengerCount} x ${formatEUR(effectivePerPassengerEur)}, ca ${formatSEK(approxTotalSek)})`
       : null,
     reasonableCareExpensesKr > 0
       ? `• Styrkta utlägg för mat/dryck/hotell (artikel 9, omvårdnad): ${formatSEK(reasonableCareExpensesKr)} (kvitton bifogas)`
@@ -181,21 +194,21 @@ export function calculateFlightCompensation(
     `Jag emotser kontant utbetalning via banköverföring (ej värdecheck) och bekräftelse med ärendenummer.`,
     ``,
     `Med vänlig hälsning,`,
-    `[DITT NAMN & KONTAKTUPPGIFTER]`,
+    senderLabelSv,
   ]
-    .filter(Boolean)
+    .filter((line): line is string => line !== null)
     .join("\n");
 
   const claimTextEnglish = [
-    `Subject: EU 261/2004 Compensation Claim – Booking Reference [PNR]`,
+    `Subject: EU 261/2004 Compensation Claim – Booking Reference ${pnrLabel} (${dateLabel})`,
     ``,
     `Dear ${airline.shortName} Customer Relations,`,
     ``,
     `I am writing to claim statutory compensation under Regulation (EC) No 261/2004 following the disruption to my flight.`,
     ``,
-    `- Booking reference (PNR): [INSERT PNR]`,
-    `- Flight number & date: [INSERT FLIGHT NUMBER AND DATE]`,
-    `- Route distance band: ${distanceText}`,
+    `- Booking reference (PNR): ${pnrLabel}`,
+    `- Flight number & date: ${flightLabel}, ${dateLabel}`,
+    `- Route: ${routeLabel} (${distanceText})`,
     `- Passengers included: ${passengerCount}`,
     `- Disruption: ${
       raw.disruptionType === "delay"
@@ -216,9 +229,9 @@ export function calculateFlightCompensation(
     `Please confirm receipt and arrange direct monetary payment via bank transfer (not travel vouchers).`,
     ``,
     `Yours sincerely,`,
-    `[YOUR FULL NAME]`,
+    senderLabelEn,
   ]
-    .filter(Boolean)
+    .filter((line): line is string => line !== null)
     .join("\n");
 
   return {

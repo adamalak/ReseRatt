@@ -11,18 +11,18 @@ export const metadata: Metadata = buildPageMetadata({
 
 export default function IntegritetPage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-14">
-      <div className="rounded-lg border border-[#DDD9CE] bg-white p-6 sm:p-10">
-        <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">
+    <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-10">
+      <div className="rounded border border-[#CBD5E1] bg-white p-6 sm:p-10">
+        <h1 className="text-2xl font-semibold tracking-tight text-[#0B1F3A] sm:text-3xl">
           Integritetspolicy &amp; Ansvarsfriskrivning
         </h1>
-        <p className="font-mono-num mt-2 text-xs text-stone-500">
+        <p className="font-mono-num mt-2 text-xs text-slate-500">
           Senast uppdaterad: {SITE_CONFIG.year}
         </p>
 
-        <div className="mt-8 space-y-6 text-sm leading-relaxed text-stone-700">
+        <div className="mt-8 space-y-6 text-sm leading-relaxed text-slate-700">
           <section>
-            <h2 className="text-base font-bold text-zinc-900">1. All beräkning sker lokalt</h2>
+            <h2 className="text-base font-bold text-[#0B1F3A]">1. All beräkning sker lokalt</h2>
             <p className="mt-2">
               {SITE_CONFIG.name} samlar inte in några personuppgifter. Alla uppgifter du fyller i –
               som biljettpris, försening, taxibelopp eller text i reklamationsmallen – behandlas
@@ -31,7 +31,7 @@ export default function IntegritetPage() {
           </section>
 
           <section>
-            <h2 className="text-base font-bold text-zinc-900">2. Inga spårningscookies</h2>
+            <h2 className="text-base font-bold text-[#0B1F3A]">2. Inga spårningscookies</h2>
             <p className="mt-2">
               Webbplatsen använder inga cookies för annonsering eller spårning. För övergripande,
               anonymiserad besöksstatistik (till exempel antal sidvisningar utan att spåra enskilda
@@ -42,7 +42,7 @@ export default function IntegritetPage() {
           </section>
 
           <section>
-            <h2 className="text-base font-bold text-zinc-900">3. Delade länkar</h2>
+            <h2 className="text-base font-bold text-[#0B1F3A]">3. Delade länkar</h2>
             <p className="mt-2">
               När du klickar på ”Dela till medresenär” läggs dina valda kalkylatorvärden (bolag,
               minuter och belopp) i webbadressens parametrar. Dela bara sådana länkar med personer
@@ -51,7 +51,7 @@ export default function IntegritetPage() {
           </section>
 
           <section>
-            <h2 className="text-base font-bold text-zinc-900">
+            <h2 className="text-base font-bold text-[#0B1F3A]">
               4. Oberoende &amp; eventuell reklammärkning
             </h2>
             <p className="mt-2">
@@ -63,7 +63,7 @@ export default function IntegritetPage() {
           </section>
 
           <section>
-            <h2 className="text-base font-bold text-zinc-900">
+            <h2 className="text-base font-bold text-[#0B1F3A]">
               5. Ingen juridisk rådgivning
             </h2>
             <p className="mt-2">
@@ -75,7 +75,7 @@ export default function IntegritetPage() {
                 href="https://www.konsumentverket.se/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-medium text-[#143A66] underline"
+                className="font-semibold text-[#0B1F3A] underline"
               >
                 Konsumentverket
               </a>{" "}
@@ -84,7 +84,7 @@ export default function IntegritetPage() {
                 href="https://www.arn.se/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-medium text-[#143A66] underline"
+                className="font-semibold text-[#0B1F3A] underline"
               >
                 Allmänna reklamationsnämnden (ARN)
               </a>
@@ -92,8 +92,8 @@ export default function IntegritetPage() {
             </p>
           </section>
 
-          <div className="border-t border-stone-200 pt-6">
-            <Link href="/" className="text-sm font-semibold text-[#143A66] hover:underline">
+          <div className="border-t border-[#E2E8F0] pt-6">
+            <Link href="/" className="text-sm font-semibold text-[#0B1F3A] hover:underline">
               &larr; Tillbaka till startsidan
             </Link>
           </div>

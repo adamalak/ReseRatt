@@ -1,5 +1,6 @@
 import {
   OWN_CAR_KR_PER_KM,
+  PRISBASBELOPP_2026,
   REGIONAL_RAIL_DISTANCE_LIMIT_KM,
   RULES_YEAR,
 } from "../data/constants";
@@ -25,6 +26,11 @@ export interface TransitCalculationInput {
   hadValidTicketBeforeDelay: boolean;
   /** Enbart aktuellt för Snälltågets nattåg vid avgång > 180 min sen. */
   isNightTrainDepartureOver180Min?: boolean;
+  /** Valfria ärendeuppgifter som fylls direkt i färdig kravtext och A4-underlag. */
+  travelDate?: string;
+  bookingRef?: string;
+  routeDescription?: string;
+  passengerName?: string;
 }
 
 export interface TransitCalculationResult {
@@ -90,8 +96,8 @@ export function calculateTransitCompensation(
   const effectiveThresholdMinutes = effectiveMode === "eu_rail" ? 60 : 20;
   const legalBasisLabel =
     effectiveMode === "eu_rail"
-      ? `EU:s tågpassagerarförordning (sträcka ≥ ${REGIONAL_RAIL_DISTANCE_LIMIT_KM} km)`
-      : `Lagen om kollektivtrafikresenärers rättigheter (< ${REGIONAL_RAIL_DISTANCE_LIMIT_KM} km)`;
+      ? `EU:s tågpassagerarförordning (EU) 2021/782 (sträcka ≥ ${REGIONAL_RAIL_DISTANCE_LIMIT_KM} km)`
+      : `Lag (2015:953) om kollektivtrafikresenärers rättigheter (< ${REGIONAL_RAIL_DISTANCE_LIMIT_KM} km)`;
 
   const ticketCompensationPercent = computeTicketPercent(effectiveMode, delayMinutes);
   const eligibleForTicketRefund = ticketCompensationPercent > 0;
@@ -234,12 +240,23 @@ export function calculateTransitCompensation(
 
   const shareSummaryText = `${operator.shortName} (${RULES_YEAR}, ${delayMinutes} min sen): ${summaryHeadline}. Ansök ${operator.deadlineText.toLowerCase()}.`;
 
+  const dateLabel = raw.travelDate?.trim() || "[FYLL I RESDATUM]";
+  const routeLabel = raw.routeDescription?.trim() || "[FYLL I TÅG/LINJE, FRÅN–TILL]";
+  const bookingLabel = raw.bookingRef?.trim() || "[FYLL I BILJETTNUMMER]";
+  const senderLabel = raw.passengerName?.trim() || "[DITT NAMN OCH TELEFONNUMMER]";
+
+  const pbbReferenceLine =
+    alternativeTransportCapKr > 0
+      ? `• Beräknad maxgräns för alternativ transport (${operator.shortName} ${RULES_YEAR}): ${formatSEK(alternativeTransportCapKr)} (utifrån ${RULES_YEAR} års prisbasbelopp ${formatSEK(PRISBASBELOPP_2026)})`
+      : `• Regelreferens ${RULES_YEAR}: ${legalBasisLabel} · prisbasbelopp ${formatSEK(PRISBASBELOPP_2026)}`;
+  const voucherSuffix = voucherBonusPercent > 0 ? ` / värdekod (+${voucherBonusPercent} %)` : "";
+
   const claimTextTemplate = [
-    `Ämne: Ansökan om förseningsersättning – ${operator.name}`,
+    `Ämne: Ansökan om förseningsersättning – ${operator.name} (${dateLabel})`,
     ``,
     `Hej ${operator.shortName},`,
     ``,
-    `Jag drabbades av en försening på ca ${delayMinutes} minuter till min planerade slutdestination och ansöker härmed om ersättning enligt gällande resevillkor (${legalBasisLabel}).`,
+    `Jag reste med er den ${dateLabel} (${routeLabel}) och drabbades av en försening på ca ${delayMinutes} minuter till min planerade slutdestination. Jag ansöker härmed om ersättning enligt gällande resevillkor och ${legalBasisLabel}.`,
     ``,
     `• Biljettyp: ${
       raw.ticketType === "single"
@@ -248,21 +265,20 @@ export function calculateTransitCompensation(
           ? `30-dagarsbiljett / periodkort (${formatSEK(ticketPriceKr)})`
           : `Årskort (${formatSEK(ticketPriceKr)})`
     }`,
-    `• Biljettnummer / Boknings-ID: [FYLL I BILJETTNUMMER]`,
-    `• Resdatum, linje & avgång: [FYLL I DATUM, TÅG/LINJE, FRÅN–TILL]`,
+    `• Biljettnummer / Boknings-ID: ${bookingLabel}`,
+    `• Resdatum & sträcka: ${dateLabel}, ${routeLabel}`,
     raw.usedTaxi
-      ? `• Utlägg alternativ transport (taxi): ${formatSEK(taxiCostKr)} (specificerat originalkvitto bifogas)`
+      ? `• Yrkad ersättning för alternativ transport (taxi): ${formatSEK(reimbursedAlternativeKr > 0 ? reimbursedAlternativeKr : taxiCostKr)} av ${formatSEK(taxiCostKr)} (specificerat taxameter-/originalkvitto bifogas)`
       : raw.usedOwnCar
-        ? `• Alternativ transport (egen bil): ${ownCarKm} km (${formatSEK(claimedAlternativeCostKr)})`
+        ? `• Yrkad ersättning för alternativ transport (egen bil ${ownCarKm} km): ${formatSEK(reimbursedAlternativeKr > 0 ? reimbursedAlternativeKr : claimedAlternativeCostKr)}`
         : `• Beräknat ersättningsanspråk (prisavdrag): ca ${ticketCompensationPercent} % (${formatSEK(totalTicketWithBonusKr)})`,
+    pbbReferenceLine,
     ``,
-    `Jag önskar utbetalning till bankkonto / Swish / värdekod enligt bifogade uppgifter.`,
+    `Jag önskar utbetalning till bankkonto / Swish${voucherSuffix} enligt bifogade uppgifter.`,
     ``,
     `Med vänlig hälsning,`,
-    `[DITT NAMN OCH TELEFONNUMMER]`,
-  ]
-    .filter(Boolean)
-    .join("\n");
+    senderLabel,
+  ].join("\n");
 
   return {
     operator,

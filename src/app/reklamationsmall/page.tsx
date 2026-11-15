@@ -39,28 +39,23 @@ export default function ReklamationsmallPage() {
   ];
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
+    <div className="mx-auto max-w-6xl px-4 py-4 sm:px-6 sm:py-6">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <nav aria-label="Brödsmulor" className="mb-4 text-xs font-medium text-stone-500">
-        <Link href="/" className="hover:text-[#143A66] hover:underline">
-          Hem
-        </Link>
-        <span className="mx-2">/</span>
-        <span className="text-zinc-900">Reklamationsmall</span>
-      </nav>
-
-      <header className="mb-8 max-w-3xl">
-        <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-4xl">
+      <div className="mb-4 border-b border-[#CBD5E1] pb-2.5 print:hidden">
+        <nav aria-label="Brödsmulor" className="hidden text-xs font-medium text-slate-500 sm:block">
+          <Link href="/" className="hover:text-[#0B1F3A] hover:underline">
+            Hem
+          </Link>
+          <span className="mx-2">/</span>
+          <span className="text-[#0F172A]">Reklamationsmall</span>
+        </nav>
+        <h1 className="mt-0.5 text-lg font-bold tracking-tight text-[#0B1F3A] sm:text-2xl">
           Kravbrevs- &amp; reklamationsgenerator ({SITE_CONFIG.year})
         </h1>
-        <p className="mt-2.5 text-sm leading-relaxed text-stone-600 sm:text-base">
-          Anpassa färdig reklamationstext att klistra in i bolagens kundserviceformulär eller e-post
-          – på både svenska och engelska.
-        </p>
-      </header>
+      </div>
 
       <ClaimTemplateGenerator />
 

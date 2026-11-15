@@ -1,5 +1,6 @@
 "use client";
 
+import { Printer } from "lucide-react";
 import { useMemo, useState } from "react";
 import { ClaimCopyBox } from "@/components/ClaimCopyBox";
 import { OPERATORS } from "@/lib/data/operators";
@@ -41,7 +42,7 @@ Hej ${operator.shortName},
 
 Jag reste med er den ${date} på sträckan ${trip} (biljett-/bokningsnr: ${ref}) och blev försenad med ${delay} till min slutdestination.
 
-Enligt gällande resevillkor och tillämplig lagstiftning begär jag härmed förseningsersättning om ${amount}.
+Enligt gällande resevillkor och tillämplig lagstiftning (Lag (2015:953) / EU-förordning 2021/782) begär jag härmed förseningsersättning om ${amount}.
 
 Kontouppgifter / Swish för utbetalning:
 [CLEARING- OCH KONTONUMMER / TELEFONNUMMER]
@@ -61,9 +62,9 @@ Hej ${operator.shortName},
 
 Den ${date} på sträckan ${trip} (biljett-/kortnr: ${ref}) uppstod en störning som innebar skälig risk att jag skulle bli försenad med minst 20 minuter (${delay}) till mitt resmål.
 
-Jag valde därför skäligt alternativt färdsätt i enlighet med er resegaranti.
+Jag valde därför skäligt alternativt färdsätt i enlighet med er resegaranti (Lag 2015:953, prisbasbelopp 2026: 59 200 kr).
 • Yrkad ersättning för utlägg: ${amount}
-• Specificerat originalkvitto / underlag bifogas denna ansökan.
+• Specificerat taxameter-/originalkvitto bifogas denna ansökan.
 
 Jag önskar utbetalning till bankkonto enligt bifogade uppgifter.
 
@@ -150,13 +151,13 @@ ${name}`,
   }, [kind, operator, bookingRef, travelDate, route, delayText, amountText, passengerName]);
 
   return (
-    <div className="grid gap-6 lg:grid-cols-12">
-      <div className="space-y-4 rounded-lg border border-[#DDD9CE] bg-white p-5 sm:p-6 lg:col-span-5">
+    <div className="grid gap-5 lg:grid-cols-12">
+      <div className="space-y-4 rounded border border-[#CBD5E1] bg-white p-4 sm:p-6 lg:col-span-5 print:hidden">
         <div>
-          <label className="text-xs font-semibold tracking-wider text-stone-500 uppercase">
+          <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">
             Välj typ av kravbrev
           </label>
-          <div className="mt-2 grid gap-2">
+          <div className="mt-2 grid gap-1.5">
             {(
               [
                 ["transit_delay", "Tåg / Lokaltrafik – Förseningsersättning"],
@@ -169,10 +170,10 @@ ${name}`,
                 key={val}
                 type="button"
                 onClick={() => setKind(val)}
-                className={`rounded-md border px-3 py-2 text-left text-xs font-semibold transition ${
+                className={`rounded-[4px] border px-3 py-2 text-left text-xs font-semibold transition ${
                   kind === val
-                    ? "border-[#143A66] bg-[#143A66] text-white"
-                    : "border-stone-300 bg-[#FAF9F6] text-zinc-800 hover:bg-stone-200/70"
+                    ? "border-[#0B1F3A] bg-[#0B1F3A] text-white"
+                    : "border-[#CBD5E1] bg-[#F8FAFC] text-[#0F172A] hover:bg-slate-100"
                 }`}
               >
                 {label}
@@ -182,14 +183,14 @@ ${name}`,
         </div>
 
         <div>
-          <label htmlFor="tpl-op" className="block text-xs font-semibold text-stone-600">
+          <label htmlFor="tpl-op" className="block text-xs font-semibold text-slate-700">
             Bolag / trafikhuvudman
           </label>
           <select
             id="tpl-op"
             value={operatorSlug}
             onChange={(e) => setOperatorSlug(e.target.value)}
-            className="mt-1 w-full rounded-md border border-stone-300 bg-white px-3 py-2 text-sm text-zinc-900"
+            className="mt-1 w-full rounded-[4px] border border-[#CBD5E1] bg-white px-3 py-2 text-sm text-[#0F172A]"
           >
             {OPERATORS.map((o) => (
               <option key={o.slug} value={o.slug}>
@@ -201,7 +202,7 @@ ${name}`,
 
         <div className="grid gap-3 sm:grid-cols-2">
           <div>
-            <label htmlFor="tpl-ref" className="block text-xs font-semibold text-stone-600">
+            <label htmlFor="tpl-ref" className="block text-xs font-semibold text-slate-700">
               Bokningsnr / Biljett-ID
             </label>
             <input
@@ -210,26 +211,26 @@ ${name}`,
               placeholder="t.ex. A8F29C"
               value={bookingRef}
               onChange={(e) => setBookingRef(e.target.value)}
-              className="mt-1 w-full rounded-md border border-stone-300 px-3 py-1.5 text-sm"
+              className="font-mono-num mt-1 w-full rounded-[4px] border border-[#CBD5E1] px-3 py-1.5 text-sm"
             />
           </div>
           <div>
-            <label htmlFor="tpl-date" className="block text-xs font-semibold text-stone-600">
+            <label htmlFor="tpl-date" className="block text-xs font-semibold text-slate-700">
               Resdatum
             </label>
             <input
               id="tpl-date"
               type="text"
-              placeholder="t.ex. 2026-11-13"
+              placeholder="t.ex. 2026-11-15"
               value={travelDate}
               onChange={(e) => setTravelDate(e.target.value)}
-              className="mt-1 w-full rounded-md border border-stone-300 px-3 py-1.5 text-sm"
+              className="font-mono-num mt-1 w-full rounded-[4px] border border-[#CBD5E1] px-3 py-1.5 text-sm"
             />
           </div>
         </div>
 
         <div>
-          <label htmlFor="tpl-route" className="block text-xs font-semibold text-stone-600">
+          <label htmlFor="tpl-route" className="block text-xs font-semibold text-slate-700">
             Sträcka / Tåg- eller flightnummer
           </label>
           <input
@@ -238,13 +239,13 @@ ${name}`,
             placeholder="t.ex. Stockholm–Göteborg / X2000 421"
             value={route}
             onChange={(e) => setRoute(e.target.value)}
-            className="mt-1 w-full rounded-md border border-stone-300 px-3 py-1.5 text-sm"
+            className="mt-1 w-full rounded-[4px] border border-[#CBD5E1] px-3 py-1.5 text-sm"
           />
         </div>
 
         <div className="grid gap-3 sm:grid-cols-2">
           <div>
-            <label htmlFor="tpl-delay" className="block text-xs font-semibold text-stone-600">
+            <label htmlFor="tpl-delay" className="block text-xs font-semibold text-slate-700">
               Försening
             </label>
             <input
@@ -252,11 +253,11 @@ ${name}`,
               type="text"
               value={delayText}
               onChange={(e) => setDelayText(e.target.value)}
-              className="mt-1 w-full rounded-md border border-stone-300 px-3 py-1.5 text-sm"
+              className="font-mono-num mt-1 w-full rounded-[4px] border border-[#CBD5E1] px-3 py-1.5 text-sm"
             />
           </div>
           <div>
-            <label htmlFor="tpl-amount" className="block text-xs font-semibold text-stone-600">
+            <label htmlFor="tpl-amount" className="block text-xs font-semibold text-slate-700">
               Yrkad ersättning
             </label>
             <input
@@ -265,13 +266,13 @@ ${name}`,
               placeholder="t.ex. 400 EUR / 680 kr"
               value={amountText}
               onChange={(e) => setAmountText(e.target.value)}
-              className="mt-1 w-full rounded-md border border-stone-300 px-3 py-1.5 text-sm"
+              className="font-mono-num mt-1 w-full rounded-[4px] border border-[#CBD5E1] px-3 py-1.5 text-sm"
             />
           </div>
         </div>
 
         <div>
-          <label htmlFor="tpl-name" className="block text-xs font-semibold text-stone-600">
+          <label htmlFor="tpl-name" className="block text-xs font-semibold text-slate-700">
             Ditt namn (valfritt – stannar i webbläsaren)
           </label>
           <input
@@ -280,17 +281,36 @@ ${name}`,
             placeholder="Förnamn Efternamn"
             value={passengerName}
             onChange={(e) => setPassengerName(e.target.value)}
-            className="mt-1 w-full rounded-md border border-stone-300 px-3 py-1.5 text-sm"
+            className="mt-1 w-full rounded-[4px] border border-[#CBD5E1] px-3 py-1.5 text-sm"
           />
         </div>
       </div>
 
-      <div className="lg:col-span-7">
-        <ClaimCopyBox
-          title="Färdigt kravbrev (100 % lokalt i din webbläsare)"
-          primaryText={generated.sv}
-          secondaryEnglishText={generated.en}
-        />
+      <div className="space-y-3 lg:col-span-7">
+        <div className="print:hidden">
+          <ClaimCopyBox
+            title="Färdigt kravbrev (100 % lokalt i din webbläsare)"
+            primaryText={generated.sv}
+            secondaryEnglishText={generated.en}
+          />
+          <button
+            type="button"
+            onClick={() => window.print()}
+            className="mt-3 inline-flex items-center gap-2 rounded-[4px] border border-[#CBD5E1] bg-white px-4 py-2 text-xs font-semibold text-[#0B1F3A] transition hover:bg-slate-100"
+          >
+            <Printer className="h-4 w-4" aria-hidden="true" />
+            <span>Spara kravbrev som PDF / Skriv ut</span>
+          </button>
+        </div>
+
+        <div className="hidden border border-[#CBD5E1] p-4 print:block">
+          <p className="border-b border-[#0B1F3A] pb-2 font-serif text-base font-bold text-[#0B1F3A]">
+            ReseRätt.se &mdash; Utskrift av reklamationsbrev ({operator.shortName})
+          </p>
+          <pre className="mt-3 whitespace-pre-wrap font-sans text-[10pt] leading-relaxed text-[#0F172A]">
+            {generated.sv}
+          </pre>
+        </div>
       </div>
     </div>
   );

@@ -9,6 +9,7 @@ import {
 import { CONSUMER_GUIDES } from "@/lib/data/guides";
 import { OPERATORS } from "@/lib/data/operators";
 import { AUTHORITY_SOURCES, getAuthoritySources } from "@/lib/data/sources";
+import { formatSEK } from "@/lib/format";
 import { SITE_CONFIG } from "@/lib/siteConfig";
 
 describe("2026 svenska regelkonstanter", () => {
@@ -295,5 +296,70 @@ describe("calculateFlightCompensation", () => {
     expect(SITE_CONFIG.contactEmail).toBe("kontakt@reseratt.se");
     expect(SITE_CONFIG.publisherName).toContain("ReseRätt.se");
     expect("sisterSiteUrl" in SITE_CONFIG).toBe(false);
+  });
+
+  it("fyller i datum, belopp, lagstöd och prisbasbelopp i färdiga kravtexter", () => {
+    const slTaxi = calculateTransitCompensation({
+      operatorSlug: "sl",
+      ticketType: "period_30",
+      ticketPriceKr: 1060,
+      delayMinutes: 40,
+      routeDistanceBand: "under_150km",
+      usedTaxi: true,
+      taxiCostKr: 650,
+      passengersSharingTaxi: 1,
+      usedOwnCar: false,
+      ownCarKm: 0,
+      tollsAndParkingKr: 0,
+      preferVoucher: false,
+      hadValidTicketBeforeDelay: true,
+      travelDate: "2026-11-15",
+      bookingRef: "SL-9988",
+      routeDescription: "Pendeltåg 40 mot Södertälje",
+    });
+    expect(slTaxi.legalBasisLabel).toContain("2015:953");
+    expect(slTaxi.claimTextTemplate).toContain("2026-11-15");
+    expect(slTaxi.claimTextTemplate).toContain("SL-9988");
+    expect(slTaxi.claimTextTemplate).toContain("650 kr");
+    expect(slTaxi.claimTextTemplate).toContain(formatSEK(1480));
+    expect(slTaxi.claimTextTemplate).toContain(formatSEK(59200));
+
+    const sjLong = calculateTransitCompensation({
+      operatorSlug: "sj",
+      ticketType: "single",
+      ticketPriceKr: 800,
+      delayMinutes: 125,
+      routeDistanceBand: "over_150km",
+      usedTaxi: false,
+      taxiCostKr: 0,
+      passengersSharingTaxi: 1,
+      usedOwnCar: false,
+      ownCarKm: 0,
+      tollsAndParkingKr: 0,
+      preferVoucher: false,
+      hadValidTicketBeforeDelay: true,
+    });
+    expect(sjLong.legalBasisLabel).toContain("2021/782");
+    expect(sjLong.claimTextTemplate).toContain("400 kr");
+
+    const flightClaim = calculateFlightCompensation({
+      airlineSlug: "sas",
+      disruptionType: "delay",
+      arrivalDelayMinutes: 210,
+      distanceBand: "le_1500",
+      cause: "technical_or_crew",
+      reroutedWithinHalfCutLimit: false,
+      passengerCount: 1,
+      waitingHoursAtAirport: 3,
+      reasonableCareExpensesKr: 150,
+      travelDate: "2026-11-15",
+      flightNumber: "SK1524",
+      bookingRef: "ABC123",
+    });
+    expect(flightClaim.claimTextSwedish).toContain("2026-11-15");
+    expect(flightClaim.claimTextSwedish).toContain("SK1524");
+    expect(flightClaim.claimTextSwedish).toContain("ABC123");
+    expect(flightClaim.claimTextSwedish).toContain("250 EUR");
+    expect(flightClaim.claimTextSwedish).toContain("NJA 2018 s. 127");
   });
 });
